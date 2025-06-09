@@ -1,11 +1,45 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Phone, Mail, MessageCircle, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    service: '',
+    message: ''
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Here you would typically send the form data to a backend
+    console.log('Booking submitted:', formData);
+    alert('Thank you! Your booking request has been submitted. We will contact you shortly to confirm your appointment.');
+    
+    // Reset form
+    setFormData({
+      firstName: '',
+      lastName: '',
+      phone: '',
+      email: '',
+      service: '',
+      message: ''
+    });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   return (
     <section id="contact" className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -26,52 +60,85 @@ const Contact = () => {
               Send us a Message
             </h3>
             
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm font-medium text-accent mb-2 block">First Name</label>
-                  <Input placeholder="Your first name" />
+                  <Input 
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    placeholder="Your first name" 
+                    required
+                  />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-accent mb-2 block">Last Name</label>
-                  <Input placeholder="Your last name" />
+                  <Input 
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    placeholder="Your last name"
+                    required
+                  />
                 </div>
               </div>
               
               <div>
                 <label className="text-sm font-medium text-accent mb-2 block">Phone Number</label>
-                <Input placeholder="Your phone number" />
+                <Input 
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="Your phone number"
+                  required
+                />
               </div>
               
               <div>
                 <label className="text-sm font-medium text-accent mb-2 block">Email (Optional)</label>
-                <Input type="email" placeholder="your.email@example.com" />
+                <Input 
+                  name="email"
+                  type="email" 
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="your.email@example.com" 
+                />
               </div>
               
               <div>
                 <label className="text-sm font-medium text-accent mb-2 block">Service Interested In</label>
-                <select className="w-full p-3 border border-input rounded-md bg-background">
-                  <option>Select a service</option>
-                  <option>Body Waxing</option>
-                  <option>Hair Weaving</option>
-                  <option>Hair Retouch</option>
-                  <option>Bridal Services</option>
-                  <option>Hair Plaiting</option>
-                  <option>Hair Treatment</option>
-                  <option>Braiding</option>
-                  <option>Nail Services</option>
+                <select 
+                  name="service"
+                  value={formData.service}
+                  onChange={handleInputChange}
+                  className="w-full p-3 border border-input rounded-md bg-background"
+                  required
+                >
+                  <option value="">Select a service</option>
+                  <option value="Body Waxing">Body Waxing</option>
+                  <option value="Hair Weaving">Hair Weaving</option>
+                  <option value="Hair Retouch">Hair Retouch</option>
+                  <option value="Bridal Services">Bridal Services</option>
+                  <option value="Hair Plaiting">Hair Plaiting</option>
+                  <option value="Hair Treatment">Hair Treatment</option>
+                  <option value="Braiding">Braiding</option>
+                  <option value="Nail Services">Nail Services</option>
                 </select>
               </div>
               
               <div>
                 <label className="text-sm font-medium text-accent mb-2 block">Message</label>
                 <Textarea 
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
                   placeholder="Tell us about your preferred date, time, or any special requirements..."
                   rows={4}
                 />
               </div>
               
-              <Button className="w-full gradient-bg text-white text-lg py-6">
+              <Button type="submit" className="w-full gradient-bg text-white text-lg py-6">
                 Book Appointment
               </Button>
             </form>

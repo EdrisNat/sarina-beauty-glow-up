@@ -4,6 +4,13 @@ import { Scissors, Crown, Sparkles, Hand, Brush, Heart, Star, Gem } from 'lucide
 import { Button } from '@/components/ui/button';
 
 const Services = () => {
+  const handleBooking = () => {
+    const contactSection = document.querySelector('#contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const services = [
     {
       icon: Hand,
@@ -110,6 +117,7 @@ const Services = () => {
                 </ul>
 
                 <Button 
+                  onClick={handleBooking}
                   className="w-full mt-4 gradient-bg text-white hover:opacity-90"
                   size="sm"
                 >
@@ -128,7 +136,7 @@ const Services = () => {
             <p className="text-muted-foreground mb-4">
               Contact us for personalized beauty packages tailored to your needs.
             </p>
-            <Button className="gradient-bg text-white">
+            <Button onClick={handleBooking} className="gradient-bg text-white">
               Contact Us
             </Button>
           </div>

@@ -10,9 +10,28 @@ const Header = () => {
     { name: 'Home', href: '#home' },
     { name: 'Services', href: '#services' },
     { name: 'About', href: '#about' },
-    { name: 'Location', href: '#location' },
+    { name: 'Gallery', href: '/gallery' },
     { name: 'Contact', href: '#contact' }
   ];
+
+  const scrollToSection = (href: string) => {
+    if (href.startsWith('#')) {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      window.location.href = href;
+    }
+    setIsMenuOpen(false);
+  };
+
+  const handleBooking = () => {
+    const contactSection = document.querySelector('#contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <header className="fixed top-0 w-full z-50 bg-background/95 backdrop-blur-sm border-b border-border">
@@ -32,13 +51,13 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <a
+              <button
                 key={item.name}
-                href={item.href}
+                onClick={() => scrollToSection(item.href)}
                 className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
               >
                 {item.name}
-              </a>
+              </button>
             ))}
           </nav>
 
@@ -51,7 +70,7 @@ const Header = () => {
                 Call us today
               </p>
             </div>
-            <Button className="gradient-bg text-white hover:opacity-90">
+            <Button onClick={handleBooking} className="gradient-bg text-white hover:opacity-90">
               Book Appointment
             </Button>
           </div>
@@ -70,16 +89,15 @@ const Header = () => {
           <div className="md:hidden py-4 border-t border-border">
             <nav className="flex flex-col space-y-3">
               {navItems.map((item) => (
-                <a
+                <button
                   key={item.name}
-                  href={item.href}
-                  className="text-foreground hover:text-primary transition-colors duration-300 font-medium py-2"
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => scrollToSection(item.href)}
+                  className="text-foreground hover:text-primary transition-colors duration-300 font-medium py-2 text-left"
                 >
                   {item.name}
-                </a>
+                </button>
               ))}
-              <Button className="gradient-bg text-white mt-4 w-full">
+              <Button onClick={handleBooking} className="gradient-bg text-white mt-4 w-full">
                 Book Appointment
               </Button>
             </nav>

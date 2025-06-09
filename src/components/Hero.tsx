@@ -4,12 +4,25 @@ import { Button } from '@/components/ui/button';
 import { Sparkles, Star } from 'lucide-react';
 
 const Hero = () => {
+  const handleBooking = () => {
+    const contactSection = document.querySelector('#contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleViewServices = () => {
+    const servicesSection = document.querySelector('#services');
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="home" className="min-h-screen relative overflow-hidden">
       {/* Background Gradient */}
       <div className="absolute inset-0 gradient-bg"></div>
       
-      {/* Decorative Elements */}
       <div className="absolute top-20 left-10 text-white/20">
         <Sparkles className="w-8 h-8 animate-float" />
       </div>
@@ -52,12 +65,14 @@ const Hero = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button 
+                onClick={handleBooking}
                 size="lg" 
                 className="bg-white text-accent hover:bg-white/90 px-8 py-6 text-lg font-semibold hover-glow"
               >
                 Book Appointment
               </Button>
               <Button 
+                onClick={handleViewServices}
                 variant="outline" 
                 size="lg"
                 className="border-white text-white hover:bg-white hover:text-accent px-8 py-6 text-lg font-semibold"
